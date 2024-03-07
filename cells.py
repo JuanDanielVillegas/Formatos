@@ -15,6 +15,9 @@ cells = {
     'A75': 'LIC. Y M.I. Ángel Noé de la Rocha Caro'
 }
 
+# Diccionario para alamacenar los nombres de las aplicaciones junto con el tipo de perfil
+# y la justificación. 
+
 app = {
     'CISCO': {'name': 'EXTRANET II', 'profile': 'CONECTIVIDAD', 'explication': 'Estar en posibilidad de tener acceso a las diferentes sistemas utilizados por esta Dirección, por mencionar  algunos: Cisco, EFA, SIMA, EVAC, Entre otros.'},
     'CU_WEB': {'name': 'CU WEB', 'profile': 'Diario, DYP, RET, NEP, DI, NOT Y/O DIOT', 'explication':'Derivado de las funciones fiscales que tiene la entidad necesita la consulta o cuenta única web para realizar los análisis fiscales correspondientes'},

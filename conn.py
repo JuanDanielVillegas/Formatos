@@ -28,9 +28,7 @@ query = """
         INNER JOIN dd_cuentas AS cuentas ON cuentas.c_empleado = emp.c_empleado
     WHERE 
         emp.c_ciudad = 1 AND emp.bol_vige = 1 
-        AND emp.str_nombre  COLLATE Latin1_General_100_CI_AI LIKE ? COLLATE Latin1_General_100_CI_AI
-        AND emp.str_apat  COLLATE Latin1_General_100_CI_AI LIKE ? COLLATE Latin1_General_100_CI_AI
-        AND emp.str_amat  COLLATE Latin1_General_100_CI_AI LIKE ? COLLATE Latin1_General_100_CI_AI
+        AND CONCAT(emp.str_nombre, ' ', emp.str_apat, ' ', emp.str_amat) COLLATE Latin1_General_100_CI_AI LIKE ? COLLATE Latin1_General_100_CI_AI
     ORDER BY 
 	CASE WHEN str_ip IS NULL OR str_ip = ' ' THEN 1 ELSE 0 END
 """

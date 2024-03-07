@@ -3,8 +3,6 @@ import customtkinter
 from cells import *
 from main import select_emp, start
 
-
-
 def show_apps(window):
 
     params = {
@@ -65,12 +63,9 @@ def call_main(window, entry):
 
 
     text = entry.get()
-    nom = text.split(',')
-    if(len(nom) < 3):
-        nom.append('')
-        nom.append('')
+    nombre = text.replace(' ','%')
   
-    emp = select_emp(nom[0].strip(), nom[1].strip(), nom[2].strip())
+    emp = select_emp(nombre)
 
     
     label = customtkinter.CTkLabel(window, font=('Arial', 14), text_color="#0078d7",text="Número Empleado", fg_color="transparent")
@@ -168,7 +163,6 @@ def show_ip_window(window, emp, combobox, combobox2, checkbox, radio_var, sr_cb,
     ip_window.geometry('450x90')
     ip_window.grab_set()
 
-    # window.grid_rowconfigure(0, weight=1)
     ip_window.grid_columnconfigure(0, weight=1)
 
     ip_entry = customtkinter.CTkEntry(ip_window, placeholder_text="IP", corner_radius=5, font=('Arial', 12), border_width=1)
@@ -176,7 +170,6 @@ def show_ip_window(window, emp, combobox, combobox2, checkbox, radio_var, sr_cb,
     ip_entry.grid(row=0, column=0, columnspan=4, padx=(20, 0), pady=(20, 20), sticky="nsew")
 
     ip_button = customtkinter.CTkButton(ip_window, command=lambda: ( start(set_field(emp, ip_entry.get()), combobox, combobox2, checkbox, radio_var, sr_cb, checkboxes), ip_window.withdraw(),window.withdraw(), init()), text="Llenar Formatos", corner_radius=5, fg_color="#279650", hover_color="#1e5934")
-    #ip_button = customtkinter.CTkButton(ip_window, command=lambda: ( start(emp, combobox.get().strip(), combobox2.get().strip(), checkbox.get(), radio_var.get(), sr_cb.get(), checkboxes), ip_window.withdraw(), window.withdraw(), init()), text="Llenar Formatos", corner_radius=5, fg_color="#279650", hover_color="#1e5934")
     ip_button.configure(height=40)
     ip_button.grid(row=0, column=4, columnspan=1, padx=(20, 20), pady=(20, 20), sticky="nw")
 
@@ -185,11 +178,9 @@ def show_ip_window(window, emp, combobox, combobox2, checkbox, radio_var, sr_cb,
 def init():
     customtkinter.set_appearance_mode('ligth')
     window = customtkinter.CTk()
-    #window.config(bg="#0f0f0f")
     window.title('Llenado de Formatos')
     window.geometry('820x520')
 
-    # window.grid_rowconfigure(0, weight=1)
     window.grid_columnconfigure(0, weight=1)
 
     entry = customtkinter.CTkEntry(window, placeholder_text="Nombre del Empleado", corner_radius=5, font=('Arial', 14), border_width=1)
@@ -199,9 +190,6 @@ def init():
     button = customtkinter.CTkButton(window, text="Buscar",  command=lambda:call_main(window, entry), corner_radius=5, )
     button.configure(height=40)
     button.grid(row=0, column=4, columnspan=1, padx=(20, 20), pady=(20, 20), sticky="nw")
-
-    #combobox = customtkinter.CTkComboBox(window, values=["option 1", "option 2"])
-    #combobox.grid(row=3, column=3, padx=(20, 20), pady=(20, 20), sticky="nsew")
 
     window.mainloop()
 

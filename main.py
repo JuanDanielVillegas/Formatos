@@ -9,17 +9,26 @@ from functions import *
 from forms import *
 from conn import *
 
-def find_emp(nom, apat, amat): 
+def find_emp(nombre): 
 
     try:
         connection = pyodbc.connect(conn_str)
         cursor = connection.cursor()
 
-        cursor.execute(query, ('%' + nom + '%', '%' + apat + '%', '%' +amat + '%'))
+        param = '%' + nombre + '%'
+
+        print(param)
+
+        cursor.execute(query, (param))
 
         rows = cursor.fetchall()
 
         ip_value = str(rows[0].ip) if rows[0].ip is not None else 'ip_not_found'
+
+        # PENDIENTE
+        # Alertar sobre tipos de datos nonetype 
+        # Transformar a string
+
 
         emp = {
             'A8' : get_date(),
@@ -30,7 +39,7 @@ def find_emp(nom, apat, amat):
             'C20' : rows[0].Curp,
             'A21' : rows[0].Numero,
             'A22' : rows[0].correo.replace('BUZON.', '').lower(),
-            'A24': '(614) 429-33-00 Ext. ' + rows[0].ext,
+            'A24': '(614) 429-33-00 Ext. ' + str(rows[0].ext),
             'A25': rows[0].Superior.title(),
             'A34': ip_value,
             'A81' : rows[0].titulo.upper() + ' ' + rows[0].Nombre.title()  
@@ -73,14 +82,6 @@ def mark_suiefi(opt, cedula, st, s):
     if opt == 'Cambio':
         suiefi = 'C49'
 
-    # print('(1). Envío de Celula')
-    # print('Control y Seguimiento de Propuestas')
-    # print('(2). S=Usuario')
-    # print('(3). T=Transferencia')
-    # print('(4). Seguimiento Revisiones S=Usuario')
-    # print('(5). Omitir')
-
-
     if cedula == 1:
         cedula = 'B54'
     if st == 1:
@@ -94,8 +95,8 @@ def mark_suiefi(opt, cedula, st, s):
     return suiefi, cedula, st, s
 
 
-def select_emp(nom, apat, amat):
-    emp = find_emp(nom, apat, amat)
+def select_emp(nombre):
+    emp = find_emp(nombre)
     global cells
     cells |= emp
     os.system('cls')
