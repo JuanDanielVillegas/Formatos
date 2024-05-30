@@ -3,7 +3,6 @@ import os
 import subprocess
 import pathlib
 
-
 from cells import *
 from functions import *
 from forms import *
@@ -23,7 +22,19 @@ def find_emp(nombre):
 
         rows = cursor.fetchall()
 
+        print(rows[0].Departamento.title())
+
+        alert = '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+
+        num_value = rows[0].Numero if rows[0].Numero is not None else alert
+        curp = rows[0].Curp if rows[0].Curp is not None else alert
+        rfc = rows[0].RFC if rows[0].RFC is not None else alert
         ip_value = str(rows[0].ip) if rows[0].ip is not None else 'ip_not_found'
+        depto_value = fix_y(rows[0].Departamento.title()) if rows[0].Departamento is not None else 'depto_not_found'
+        title_value = rows[0].titulo.upper() if rows[0].titulo is not None else 'C.'
+        email_value = rows[0].correo.replace('BUZON.', '').lower() if rows[0].correo is not None else alert
+        ext = str(rows[0].ext) if rows[0].ext is not None else alert
+        puesto = rows[0].Puesto.title() if rows[0].Puesto is not None else alert
 
         # PENDIENTE
         # Alertar sobre tipos de datos nonetype 
@@ -32,17 +43,17 @@ def find_emp(nombre):
 
         emp = {
             'A8' : get_date(),
-            'A14' : rows[0].Departamento.title(),
+            'A14' : depto_value,
             'A18' : rows[0].Nombre.title(),
-            'A19' : rows[0].Puesto.title(),
-            'A20' : rows[0].RFC,
-            'C20' : rows[0].Curp,
-            'A21' : rows[0].Numero,
-            'A22' : rows[0].correo.replace('BUZON.', '').lower(),
-            'A24': '(614) 429-33-00 Ext. ' + str(rows[0].ext),
+            'A19' : puesto,
+            'A20' : rfc,
+            'C20' : curp,
+            'A21' : num_value,
+            'A22' : email_value,
+            'A24': '(614) 429-33-00 Ext. ' + ext,
             'A25': rows[0].Superior.title(),
             'A34': ip_value,
-            'A81' : rows[0].titulo.upper() + ' ' + rows[0].Nombre.title()  
+            'A81' : title_value + ' ' + rows[0].Nombre.title()  
         }
 
         return emp
@@ -109,7 +120,7 @@ def select_emp(nombre):
 
 def start(emp, opt1, opt2, cedula, st, s, checkboxes):
 
-    path = './plantillas_formatos/Formatos/' + emp['A18']
+    path = './plantillas_formatos/Formatos/' + emp['A18'].strip()
     
     if not(os.path.exists(path) and os.path.isdir(path)):
         os.mkdir(path)
@@ -118,7 +129,7 @@ def start(emp, opt1, opt2, cedula, st, s, checkboxes):
     suiefi = mark_suiefi(opt2, cedula, st, s)
 
     fill_templates(emp['A18'], checked, suiefi, cedula, st, s, checkboxes)
-    command = 'explorer ' + '"' + str(pathlib.Path(__file__).parent.absolute()) + '\plantillas_formatos\Formatos\\' + emp['A18'] + '"'
+    command = 'explorer ' + '"' + str(pathlib.Path(__file__).parent.absolute()) + '\plantillas_formatos\Formatos\\' + emp['A18'].strip() + '"'
     
     subprocess.Popen(command)
 

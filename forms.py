@@ -58,7 +58,7 @@ def read_template(path):
 
 def write_form(workbook_template, app_name, emp_name, checked, suiefi, cedula, st, s):
     empty_cells = []
-    file_name = './plantillas_formatos/Formatos/' + emp_name + '/' + app_name + '_'+emp_name +'.xlsx'
+    file_name = './plantillas_formatos/Formatos/' + emp_name.strip() + '/' + app_name + '_'+emp_name.strip() +'.xlsx' ## --- Here
     workbook = xlsxwriter.Workbook(file_name)
     worksheet = workbook.add_worksheet()
     worksheet.set_column(0, 0, 26)
@@ -108,7 +108,7 @@ def write_form(workbook_template, app_name, emp_name, checked, suiefi, cedula, s
         if not workbook_template[t].value is None:
             if t in cells:
             
-                content = '  ' + cells[t] + '            '
+                content = '  ' + str(cells[t]) + '            ' ## ----- Here
                 worksheet.write_rich_string(t, workbook.add_format({'font_name': 'Arial', 'font_size': 8}), workbook_template[t].value, underline, content)
 
                 if t == 'A8': 

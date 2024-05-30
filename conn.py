@@ -24,8 +24,8 @@ query = """
         INNER JOIN mm_departamento AS depto ON depto.c_depto = emp.c_depto
         INNER JOIN mm_ciudad AS ciudad ON ciudad.c_ciudad = emp.c_ciudad
         INNER JOIN mm_puesto AS puesto ON puesto.c_puesto = emp.c_puesto
-        INNER JOIN mm_titulo AS titulo ON titulo.c_titulo = emp.c_titulo
-        INNER JOIN dd_cuentas AS cuentas ON cuentas.c_empleado = emp.c_empleado
+        FULL JOIN mm_titulo AS titulo ON titulo.c_titulo = emp.c_titulo
+        FULL JOIN dd_cuentas AS cuentas ON cuentas.c_empleado = emp.c_empleado
     WHERE 
         emp.c_ciudad = 1 AND emp.bol_vige = 1 
         AND CONCAT(emp.str_nombre, ' ', emp.str_apat, ' ', emp.str_amat) COLLATE Latin1_General_100_CI_AI LIKE ? COLLATE Latin1_General_100_CI_AI

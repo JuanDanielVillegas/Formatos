@@ -18,6 +18,13 @@ def get_month(n):
 
     return months[n-1]
 
+def fix_y(depto):
+  
+    if(depto in ['Programación Y Seguimiento', 'Gabinete Y Dictámenes']):
+        array = depto.split()
+        return ' '.join([array[0], array[1].lower(), array[2]])
+    else:
+        return depto
 
 def get_date():
     now = datetime.now()

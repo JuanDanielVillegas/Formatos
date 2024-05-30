@@ -169,7 +169,7 @@ def show_ip_window(window, emp, combobox, combobox2, checkbox, radio_var, sr_cb,
     ip_entry.configure( height=40)
     ip_entry.grid(row=0, column=0, columnspan=4, padx=(20, 0), pady=(20, 20), sticky="nsew")
 
-    ip_button = customtkinter.CTkButton(ip_window, command=lambda: ( start(set_field(emp, ip_entry.get()), combobox, combobox2, checkbox, radio_var, sr_cb, checkboxes), ip_window.withdraw(),window.withdraw(), init()), text="Llenar Formatos", corner_radius=5, fg_color="#279650", hover_color="#1e5934")
+    ip_button = customtkinter.CTkButton(ip_window, command=lambda: ( start(set_field(emp, ip_entry.get()), combobox, combobox2, checkbox, radio_var, sr_cb, checkboxes), ip_window.withdraw(),window.withdraw(), init()), text="Llenar Formatos")
     ip_button.configure(height=40)
     ip_button.grid(row=0, column=4, columnspan=1, padx=(20, 20), pady=(20, 20), sticky="nw")
 
