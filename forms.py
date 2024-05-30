@@ -36,7 +36,7 @@ def append_apps(checkboxes):
 
     return apps
 
-def fill_templates(emp_name, checked, suiefi, cedula, st, s, checkboxes):
+def fill_templates(emp_name, checked, suiefi, cedula, st, s, checkboxes, folder_date):
 
     template_path = './plantillas_formatos/PLANTILLA.xlsx'
     ws_template = read_template(template_path)
@@ -47,7 +47,7 @@ def fill_templates(emp_name, checked, suiefi, cedula, st, s, checkboxes):
 
 
     for app_name in apps: 
-        write_form(ws_template, app_name, emp_name, checked, suiefi, cedula, st, s)
+        write_form(ws_template, app_name, emp_name, checked, suiefi, cedula, st, s, folder_date)
 
 
 def read_template(path):
@@ -56,9 +56,9 @@ def read_template(path):
     return ws
 
 
-def write_form(workbook_template, app_name, emp_name, checked, suiefi, cedula, st, s):
+def write_form(workbook_template, app_name, emp_name, checked, suiefi, cedula, st, s, folder_date):
     empty_cells = []
-    file_name = './plantillas_formatos/Formatos/' + emp_name.strip() + '/' + app_name + '_'+emp_name.strip() +'.xlsx' ## --- Here
+    file_name = './Formatos/'+ folder_date + '/' + emp_name.strip() + '/' + app_name + '_'+emp_name.strip() +'.xlsx' ## --- Here
     workbook = xlsxwriter.Workbook(file_name)
     worksheet = workbook.add_worksheet()
     worksheet.set_column(0, 0, 26)

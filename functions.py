@@ -30,6 +30,10 @@ def get_date():
     now = datetime.now()
     return str(now.day) + ' de ' + get_month(now.month) + ' ' + str(now.year)
 
+def get_folder_date():
+    date = datetime.now()
+    return str(date.day) + '-' + str(date.month) + '-' + str(date.year)
+
 
 def fill_template_tags():
 

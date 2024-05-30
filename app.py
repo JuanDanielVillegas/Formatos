@@ -149,13 +149,9 @@ def call_main(window, entry):
         button2.configure(height=40)
         button2.grid(row=12, column=0, columnspan=5, padx=(0, 0), pady=(35, 20))
 
-
 def set_field(emp, ip_entry):
-    
     cells['A34'] = ip_entry
-   
     return emp
-
 
 def show_ip_window(window, emp, combobox, combobox2, checkbox, radio_var, sr_cb, checkboxes):
     ip_window = customtkinter.CTkToplevel()

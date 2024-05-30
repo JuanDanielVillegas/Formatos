@@ -35,25 +35,26 @@ def find_emp(nombre):
         email_value = rows[0].correo.replace('BUZON.', '').lower() if rows[0].correo is not None else alert
         ext = str(rows[0].ext) if rows[0].ext is not None else alert
         puesto = rows[0].Puesto.title() if rows[0].Puesto is not None else alert
+        superior = rows[0].Superior.title() if rows[0].Superior is not None else alert
+        nombre = rows[0].Nombre.title() if rows[0].Nombre is not None else alert
 
         # PENDIENTE
         # Alertar sobre tipos de datos nonetype 
         # Transformar a string
 
-
         emp = {
             'A8' : get_date(),
             'A14' : depto_value,
-            'A18' : rows[0].Nombre.title(),
+            'A18' : nombre,
             'A19' : puesto,
             'A20' : rfc,
             'C20' : curp,
             'A21' : num_value,
             'A22' : email_value,
             'A24': '(614) 429-33-00 Ext. ' + ext,
-            'A25': rows[0].Superior.title(),
+            'A25': superior,
             'A34': ip_value,
-            'A81' : title_value + ' ' + rows[0].Nombre.title()  
+            'A81' : title_value + ' ' + nombre  
         }
 
         return emp
@@ -119,17 +120,23 @@ def select_emp(nombre):
 
 
 def start(emp, opt1, opt2, cedula, st, s, checkboxes):
+    # path = './plantillas_formatos/Formatos/' + emp['A18'].strip() 
 
-    path = './plantillas_formatos/Formatos/' + emp['A18'].strip()
-    
+    folder_date = get_folder_date()
+
+    path = './Formatos/' + folder_date + '/' + emp['A18'].strip() 
+
+    if not(os.path.exists('./Formatos/'+ folder_date)):
+        os.mkdir('./Formatos/'+ folder_date)
+
     if not(os.path.exists(path) and os.path.isdir(path)):
         os.mkdir(path)
 
     checked = mark_cells(opt1)
     suiefi = mark_suiefi(opt2, cedula, st, s)
 
-    fill_templates(emp['A18'], checked, suiefi, cedula, st, s, checkboxes)
-    command = 'explorer ' + '"' + str(pathlib.Path(__file__).parent.absolute()) + '\plantillas_formatos\Formatos\\' + emp['A18'].strip() + '"'
+    fill_templates(emp['A18'], checked, suiefi, cedula, st, s, checkboxes, folder_date)
+    command = 'explorer ' + '"' + str(pathlib.Path(__file__).parent.absolute()) + '\Formatos\\' + folder_date + '\\' + emp['A18'].strip() + '"'
     
     subprocess.Popen(command)
 
