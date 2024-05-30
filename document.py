@@ -1,11 +1,10 @@
 from tkinter import *
 import customtkinter 
-
 import xlsxwriter
-from cells import *
+
+from data_structures import *
 from openpyxl import load_workbook
 from functions import *
-
 
 def append_apps(checkboxes):
     apps = [
@@ -14,7 +13,6 @@ def append_apps(checkboxes):
         'EFA',
         'EVAC'
     ]
-
 
     checkboxes_values = {
         'SUIEFI': checkboxes[0].get(),
@@ -28,7 +26,6 @@ def append_apps(checkboxes):
         'SIMA_SEG': checkboxes[8].get()
     }
 
-
     for a in checkboxes_values:
         if(checkboxes_values[a] == 1):
             apps.append(a)
@@ -41,11 +38,8 @@ def fill_templates(emp_name, checked, suiefi, cedula, st, s, checkboxes, folder_
     template_path = './plantillas_formatos/PLANTILLA.xlsx'
     ws_template = read_template(template_path)
 
-
     apps = append_apps(checkboxes)
  
-
-
     for app_name in apps: 
         write_form(ws_template, app_name, emp_name, checked, suiefi, cedula, st, s, folder_date)
 
@@ -58,15 +52,15 @@ def read_template(path):
 
 def write_form(workbook_template, app_name, emp_name, checked, suiefi, cedula, st, s, folder_date):
     empty_cells = []
-    file_name = './Formatos/'+ folder_date + '/' + emp_name.strip() + '/' + app_name + '_'+emp_name.strip() +'.xlsx' ## --- Here
+    file_name = './formatos/'+ folder_date + '/' + emp_name.strip() + '/' + app_name + '_'+emp_name.strip() +'.xlsx' ## --- Here
     workbook = xlsxwriter.Workbook(file_name)
     worksheet = workbook.add_worksheet()
     worksheet.set_column(0, 0, 26)
     worksheet.set_column('B:G', 14)
 
     size_offset = {"x_offset": 30, "y_offset": 5, "x_scale": 1.3, "y_scale": 1.3}
-    worksheet.insert_image('A1', 'shcp.png' , size_offset)
-    worksheet.insert_image('F1', 'sat.png' , size_offset)
+    worksheet.insert_image('A1', './img/shcp.png' , size_offset)
+    worksheet.insert_image('F1', './img/sat.png' , size_offset)
 
     underline = workbook.add_format({'underline':True, 'font_name': 'Arial', 'font_size': 8})
     template_tags = fill_template_tags()
@@ -152,12 +146,10 @@ def write_form(workbook_template, app_name, emp_name, checked, suiefi, cedula, s
 
                     worksheet.merge_range('A56:A57', str(workbook_template[t].value), workbook.add_format({'font_name': 'Arial', 'font_size': 8, 'text_wrap':True}))
 
-
                 if t == 'A62':
                     content = app[app_name]['explication'] + '            '
                     worksheet.merge_range('A62:G64', content, workbook.add_format({'font_name': 'Arial', 'font_size': 10, 'underline':True, 'text_wrap':True}))
         else:
-            
             if (app_name == 'SIMA_PLAN' or app_name == 'SIMA_SEG') and t == 'A25':
                 content = '  ' + cells[t] + '            '
                 worksheet.write_rich_string(t, workbook.add_format({'font_name': 'Arial', 'font_size': 8}), 'Nombre del Jefe al que Reporta:', underline, content)

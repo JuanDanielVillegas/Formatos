@@ -1,3 +1,4 @@
 plantillas_formatos/Formatos
 Formatos/*
 !Formatos/.gitkeep
+__pycache__

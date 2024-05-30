@@ -19,7 +19,6 @@ def get_month(n):
     return months[n-1]
 
 def fix_y(depto):
-  
     if(depto in ['Programación Y Seguimiento', 'Gabinete Y Dictámenes']):
         array = depto.split()
         return ' '.join([array[0], array[1].lower(), array[2]])
@@ -36,7 +35,6 @@ def get_folder_date():
 
 
 def fill_template_tags():
-
     cells = ['A','B','C','D','E','F','G']
 
     #t = [f'A{i+1}' for i in range(81)]
